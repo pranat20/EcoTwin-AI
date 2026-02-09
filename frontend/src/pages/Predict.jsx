@@ -33,7 +33,7 @@ const Predict = () => {
     try {
       setLoading(true);
       const user = JSON.parse(localStorage.getItem("user"));
-      const res = await axios.post("${API_URL}/predict", { ...formData, userId: user.id });
+      const res = await axios.post("https://ecotwin-backend.onrender.com/predict", { ...formData, userId: user.id });
       if (res.data.success) setResult(res.data);
     } catch {
       alert("AI Prediction failed. Please verify your connection.");

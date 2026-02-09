@@ -30,7 +30,7 @@ const History = () => {
 
   const fetchHistory = async (userId) => {
     try {
-      const res = await axios.get(`${API_URL}/history/${userId}`);
+      const res = await axios.get(`https://ecotwin-backend.onrender.com/history/${userId}`);
       if (res.data.success) {
         setHistory(res.data.predictions);
       }

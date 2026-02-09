@@ -14,7 +14,7 @@ function Signup() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("${API_URL}/signup", { name, email, password });
+      const res = await axios.post("https://ecotwin-backend.onrender.com/signup", { name, email, password });
       alert(res.data.message);
       if (res.data.success) navigate("/");
     } catch (err) {

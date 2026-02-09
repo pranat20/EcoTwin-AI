@@ -13,7 +13,7 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("${API_URL}/login", { email, password });
+      const res = await axios.post("https://ecotwin-backend.onrender.com/login", { email, password });
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
