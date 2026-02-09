@@ -6,6 +6,7 @@ import {
   ChevronRight, Globe, BarChart3, Info, Sparkles, Trophy
 } from "lucide-react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { API_URL } from "../config";
 
 const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444"];
 
@@ -32,7 +33,7 @@ const Predict = () => {
     try {
       setLoading(true);
       const user = JSON.parse(localStorage.getItem("user"));
-      const res = await axios.post("http://localhost:5000/predict", { ...formData, userId: user.id });
+      const res = await axios.post("${API_URL}/predict", { ...formData, userId: user.id });
       if (res.data.success) setResult(res.data);
     } catch {
       alert("AI Prediction failed. Please verify your connection.");

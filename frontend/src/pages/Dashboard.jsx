@@ -54,7 +54,7 @@ const Dashboard = () => {
 
   const fetchDashboardData = async (userId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/history/${userId}`);
+      const res = await axios.get(`${API_URL}/history/${userId}`);
       if (res.data.success) {
         const history = res.data.predictions;
         if (history.length > 0) {
