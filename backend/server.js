@@ -201,6 +201,7 @@ app.post("/predict", async (req, res) => {
                 prediction: prediction,
                 score: score,
                 recommendations: recommendations,
+                modelAccuracy: dynamicAccuracy,
                 breakdown: breakdown,
                 comparison: comparison,
                 badge: badge,

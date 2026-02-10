@@ -7,6 +7,7 @@ const predictionSchema = new mongoose.Schema({
     diet: String,
     predictedCarbonEmission: Number,
     sustainabilityScore: Number, // New Field
+    modelAccuracy: Number, // New Field
     recommendations: [String],   // New Field
     createdAt: { type: Date, default: Date.now }
 });

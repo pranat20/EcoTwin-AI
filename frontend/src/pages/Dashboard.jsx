@@ -57,7 +57,7 @@ const Dashboard = () => {
             latestEmission: latest.predictedCarbonEmission,
             avgScore: avg,
             improvement: trend,
-            modelAccuracy: 94.8 // You can also pass this from the backend
+            modelAccuracy: latest.modelAccuracy || 94.8 
           });
         }
       }
