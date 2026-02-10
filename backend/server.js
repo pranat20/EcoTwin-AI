@@ -13,19 +13,23 @@ const AuthUser = require("./models/AuthUser");
 
 const app = express();
 
-// Middleware
+// --- UPDATE 1: UNIVERSAL DYNAMIC CORS ---
 app.use(cors({
     origin: (origin, callback) => {
-        // This allows any origin that isn't null
+        // This automatically trusts whichever URL is calling the API
         if (!origin) return callback(null, true);
         return callback(null, true);
     },
     methods: ["GET", "POST"],
     credentials: true
 }));
+
 app.use(express.json());
 
 const JWT_SECRET = process.env.JWT_SECRET || "ecotwin_secret_key";
+
+// --- UPDATE 2: DYNAMIC PYTHON COMMAND ---
+// Windows uses 'python', Linux/Production servers usually use 'python3'
 const PYTHON_CMD = process.platform === "win32" ? "python" : "python3";
 
 // --- MongoDB Connection ---
@@ -36,8 +40,6 @@ mongoose.connect(process.env.MONGO_URI)
 // --- AI Recommendation Logic ---
 const generateRecommendations = (prediction, data) => {
     let tips = [];
-    
-    // Overall Footprint Logic
     if (prediction > 3000) {
         tips.push("Your footprint is quite high. Focus on reducing private vehicle usage and optimizing home heating.");
     } else if (prediction > 1500) {
@@ -45,22 +47,15 @@ const generateRecommendations = (prediction, data) => {
     } else {
         tips.push("Outstanding! Your lifestyle is highly sustainable. Share your habits with others!");
     }
-    
-    // Transport Logic (Safely checking categorical values)
     if (String(data.transport).toLowerCase() === "private") {
         tips.push("Consider carpooling or switching to public transport to save CO2.");
     }
-
-    // Diet Logic
     if (String(data.diet).toLowerCase() === "omnivore") {
         tips.push("Switching to plant-based meals just 3 times a week can reduce your food emissions by 25%.");
     }
-
-    // Waste/Recycling Logic
     if (String(data.recycling).toLowerCase() !== "yes") {
         tips.push("Improving your recycling consistency for paper and plastic can significantly reduce landfill waste.");
     }
-
     return tips.length > 0 ? tips : ["Continue monitoring your daily energy consumption to find more savings."];
 };
 
@@ -101,15 +96,16 @@ app.post("/login", async (req, res) => {
     }
 });
 
-// 3. Updated Prediction Route (Synced with Feature Map)
+// 3. Updated Prediction Route
 app.post("/predict", async (req, res) => {
     try {
         const data = req.body;
         const { userId } = data;
 
-        pythonPath = path.join(__dirname, "..", "ml", "predict.py");
+        // --- UPDATE 3: ROBUST PATHING FOR SEPARATE ML FOLDER ---
+        // '..' steps out of the 'backend' folder to reach the 'ml' folder
+        const pythonPath = path.join(__dirname, "..", "ml", "predict.py");
 
-        // ARGUMENT ORDER MUST MATCH THE 19 FEATURES IN train_model.py
         const args = [
             pythonPath,
             data.bodyType || "normal",
@@ -133,8 +129,8 @@ app.post("/predict", async (req, res) => {
             data.cookingWith || "gas"
         ];
 
-        // Change "python" to "python3" if you are on Linux/Mac
-        const pythonProcess = spawn("python", args);
+        // Use the dynamic command (PYTHON_CMD)
+        const pythonProcess = spawn(PYTHON_CMD, args);
 
         let resultData = "";
         let errorData = "";
@@ -149,22 +145,15 @@ app.post("/predict", async (req, res) => {
             }
 
             const prediction = parseFloat(resultData.trim());
-            
-            // Calculate Score: 100 is perfect, 0 is poor (Scaling based on avg data)
-            // Dataset-based normalization
-const MIN = 500;
-const MAX = 5000;
-
-let score = 100 - ((prediction - MIN) / (MAX - MIN)) * 100;
-
-if (score > 100) score = 100;
-if (score < 0) score = 0;
-
-score = Math.round(score);
+            const MIN = 500;
+            const MAX = 5000;
+            let score = 100 - ((prediction - MIN) / (MAX - MIN)) * 100;
+            if (score > 100) score = 100;
+            if (score < 0) score = 0;
+            score = Math.round(score);
 
             const recommendations = generateRecommendations(prediction, data);
 
-            // Save the detailed record to MongoDB
             const newPrediction = new UserPrediction({
                 userId,
                 bodyType: data.bodyType,
@@ -177,99 +166,46 @@ score = Math.round(score);
 
             await newPrediction.save();
 
-            // Breakdown calculation (based on dataset feature weights approximation)
+            const breakdown = {
+                transport: Math.round(prediction * 0.32),
+                energy: Math.round(prediction * 0.28),
+                diet: Math.round(prediction * 0.18),
+                waste: Math.round(prediction * 0.12),
+                lifestyle: Math.round(prediction * 0.10)
+            };
 
-// Breakdown calculation (based on dataset feature weights approximation)
-const breakdown = {
+            const INDIA_AVG = 1900;
+            const GLOBAL_AVG = 4600;
 
-    transport: Math.round(prediction * 0.32),
-    energy: Math.round(prediction * 0.28),
-    diet: Math.round(prediction * 0.18),
-    waste: Math.round(prediction * 0.12),
-    lifestyle: Math.round(prediction * 0.10)
+            const comparison = {
+                indiaAverage: INDIA_AVG,
+                globalAverage: GLOBAL_AVG,
+                vsIndiaPercent: Math.round(((prediction - INDIA_AVG) / INDIA_AVG) * 100),
+                vsGlobalPercent: Math.round(((prediction - GLOBAL_AVG) / GLOBAL_AVG) * 100),
+                betterThanIndia: prediction < INDIA_AVG,
+                betterThanGlobal: prediction < GLOBAL_AVG
+            };
 
-};
+            let badge = score >= 80 ? "Eco Champion" : score >= 60 ? "Eco Conscious" : "Eco Beginner";
 
+            const futurePrediction = [
+                { year: 2026, emission: Math.round(prediction) },
+                { year: 2027, emission: Math.round(prediction * 1.03) },
+                { year: 2028, emission: Math.round(prediction * 1.06) },
+                { year: 2029, emission: Math.round(prediction * 1.09) },
+                { year: 2030, emission: Math.round(prediction * 1.12) }
+            ];
 
-// =============================
-// NEW FEATURE 1: INDIA vs GLOBAL COMPARISON
-// =============================
-
-const INDIA_AVG = 1900;
-const GLOBAL_AVG = 4600;
-
-const comparison = {
-
-    indiaAverage: INDIA_AVG,
-    globalAverage: GLOBAL_AVG,
-
-    vsIndiaPercent: Math.round(((prediction - INDIA_AVG) / INDIA_AVG) * 100),
-
-    vsGlobalPercent: Math.round(((prediction - GLOBAL_AVG) / GLOBAL_AVG) * 100),
-
-    betterThanIndia: prediction < INDIA_AVG,
-    betterThanGlobal: prediction < GLOBAL_AVG
-
-};
-
-
-// =============================
-// NEW FEATURE 2: SUSTAINABILITY BADGE
-// =============================
-
-let badge = "";
-
-if(score >= 80)
-    badge = "Eco Champion";
-
-else if(score >= 60)
-    badge = "Eco Conscious";
-
-else
-    badge = "Eco Beginner";
-
-
-// =============================
-// NEW FEATURE 3: FUTURE PREDICTION (5 YEARS)
-// =============================
-
-const futurePrediction = [
-
-    { year: 2026, emission: Math.round(prediction) },
-
-    { year: 2027, emission: Math.round(prediction * 1.03) },
-
-    { year: 2028, emission: Math.round(prediction * 1.06) },
-
-    { year: 2029, emission: Math.round(prediction * 1.09) },
-
-    { year: 2030, emission: Math.round(prediction * 1.12) }
-
-];
-
-
-// FINAL RESPONSE
-res.json({
-
-    success: true,
-
-    prediction: prediction,
-
-    score: score,
-
-    recommendations: recommendations,
-
-    breakdown: breakdown,
-
-    comparison: comparison,
-
-    badge: badge,
-
-    futurePrediction: futurePrediction
-
-});
-
-
+            res.json({
+                success: true,
+                prediction: prediction,
+                score: score,
+                recommendations: recommendations,
+                breakdown: breakdown,
+                comparison: comparison,
+                badge: badge,
+                futurePrediction: futurePrediction
+            });
         });
     } catch (error) {
         console.error("Predict Error:", error);
