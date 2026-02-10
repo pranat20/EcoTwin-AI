@@ -205,7 +205,7 @@ const Predict = () => {
                 <Select label="Efficiency" value={formData.energyEfficiency} onChange={v=>setFormData({...formData,energyEfficiency:v})} options={["no","sometimes","yes"]} />
                 <Select label="Shower" value={formData.showerFrequency} onChange={v=>setFormData({...formData,showerFrequency:v})} options={["daily","twice a day","rarely"]} />
               </div>
-              <Input label="Screen Time (Hrs/Day)" type="number" value={formData.tvHours} onChange={v=>setFormData({...formData,tvHours:v})} />
+              <Input label="Screen Time TV/Laptop/Mobile(Hrs/Day)" type="number" value={formData.tvHours} onChange={v=>setFormData({...formData,tvHours:v})} />
               <Input label="Internet Usage (Hrs/Day)" type="number" value={formData.internetHours} onChange={v=>setFormData({...formData,internetHours:v})} />
             </StepLayout>}
 
