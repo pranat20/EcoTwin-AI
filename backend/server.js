@@ -15,7 +15,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: ["http://localhost:5000", "https://eco-twin-ai-green.vercel.app/"], // Add your Vercel URL here
+    origin: ["http://localhost:5000", "https://eco-twin-ai-seven.vercel.app/"], // Add your Vercel URL here
     methods: ["GET", "POST"],
     credentials: true
 }));
