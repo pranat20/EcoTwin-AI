@@ -27,7 +27,7 @@ function Signup() {
 
   return (
     <div className="min-h-screen flex bg-slate-50 font-sans selection:bg-emerald-100 selection:text-emerald-900">
-      {/* Visual Side - Hidden on Mobile, Premium Industrial on Desktop */}
+      {/* Visual Side */}
       <div className="hidden lg:flex w-5/12 bg-[#0f172a] p-16 flex-col justify-between text-white relative overflow-hidden">
         {/* Animated Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full">
@@ -72,7 +72,7 @@ function Signup() {
         </div>
       </div>
 
-      {/* Form Side - Optimized for Mobile Padding */}
+      {/* Form Side */}
       <div className="w-full lg:w-7/12 flex items-center justify-center p-6 sm:p-12 lg:p-24 bg-white">
         <div className="w-full max-w-[440px]">
           {/* Mobile Logo Visibility */}

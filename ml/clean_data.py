@@ -1,6 +1,6 @@
 import pandas as pd
 
-# Load dataset using correct relative path
+# Load dataset 
 data = pd.read_csv("./dataset/carbon_footprint.csv")
 
 print("Original data loaded successfully")

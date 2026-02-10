@@ -42,7 +42,7 @@ const Predict = () => {
     }
   };
 
-  // ---------- REPORT VIEW (Responsive) ----------
+ 
   if (result) return (
     <div className="min-h-screen bg-[#F8FAFC] p-4 sm:p-8 md:p-12 font-sans text-slate-900">
       <div className="max-w-5xl mx-auto space-y-6 sm:space-y-8">
@@ -166,7 +166,7 @@ const Predict = () => {
     </div>
   );
 
-  // ---------- FORM VIEW (Responsive) ----------
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] p-4 sm:p-8 md:p-12 font-sans text-slate-900">
       <div className="max-w-2xl mx-auto">

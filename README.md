@@ -43,23 +43,23 @@ Predicts:
 ### 1️⃣ Clone the Repository
 
 ### 2️⃣ Setup Backend
-cd backend
-npm install
+##### cd backend
+##### npm install
 
 # Create .env file and add:
-# MONGO_URI=your_mongodb_connection_string
-# JWT_SECRET=your_secret_key
-# npm start
+##### MONGO_URI=your_mongodb_connection_string
+##### JWT_SECRET=your_secret_key
+##### npm start
 
 ### 3️⃣ Setup Frontend
-# cd frontend
-# npm install
-# npm install lucide-react recharts axios react-router-dom
-# npm run dev
+##### cd frontend
+##### npm install
+##### npm install lucide-react recharts axios react-router-dom
+##### npm run dev
 
 ### 4️⃣ Setup Machine Learning
-# cd ml
-# pip install pandas scikit-learn joblib
-# python train_model.py
+##### cd ml
+##### pip install pandas scikit-learn joblib
+##### python train_model.py
 
 

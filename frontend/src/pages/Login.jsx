@@ -31,9 +31,9 @@ function Login() {
 
   return (
     <div className="min-h-screen flex bg-slate-50 font-sans selection:bg-emerald-100 selection:text-emerald-900">
-      {/* Visual Side - Hidden on Mobile, Premium on Desktop */}
+      {/* Visual Side */}
       <div className="hidden lg:flex w-5/12 bg-[#022c22] p-16 flex-col justify-between text-white relative overflow-hidden">
-        {/* Background Patterns */}
+        {/* Background */}
         <div className="absolute inset-0 opacity-20" 
              style={{ backgroundImage: `radial-gradient(#10b981 0.5px, transparent 0.5px)`, backgroundSize: '24px 24px' }}>
         </div>
@@ -50,7 +50,7 @@ function Login() {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 text-xs font-bold uppercase tracking-[0.2em] mb-6">
             <Sparkles className="w-3.5 h-3.5" /> Intelligence Suite
           </div>
-          {/* Responsive Heading: Smaller on mobile-sized containers, 7xl on desktop */}
+          {/* Responsive Heading */}
           <h1 className="text-5xl xl:text-7xl font-extrabold leading-[1.1] mb-8 tracking-tighter">
             Welcome <br/> 
             <span className="text-emerald-400 text-opacity-90">Back.</span>
@@ -65,10 +65,10 @@ function Login() {
         </div>
       </div>
 
-      {/* Form Side - Center aligned on all screens */}
+      {/* Form Side */}
       <div className="w-full lg:w-7/12 flex items-center justify-center p-6 sm:p-12 lg:p-24 bg-white">
         <div className="w-full max-w-[420px]">
-          {/* Mobile Logo: Only visible when the left side is hidden */}
+          {/* Mobile Logo */}
           <div className="lg:hidden flex items-center gap-2 mb-10">
             <div className="bg-emerald-600 p-2 rounded-xl">
                <Leaf className="w-5 h-5 text-white" />

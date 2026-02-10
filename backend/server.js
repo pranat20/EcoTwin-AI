@@ -7,13 +7,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-// Models
+
 const UserPrediction = require("./models/UserPrediction");
 const AuthUser = require("./models/AuthUser");
 
 const app = express();
 
-// --- UPDATE 1: UNIVERSAL DYNAMIC CORS ---
+
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin) return callback(null, true);
@@ -27,13 +27,13 @@ app.use(express.json());
 
 const JWT_SECRET = process.env.JWT_SECRET || "ecotwin_secret_key";
 
-// --- UPDATE 2: DYNAMIC PYTHON COMMAND ---
+
 const PYTHON_CMD = process.platform === "win32" ? "python" : "python3";
 
 // --- MongoDB Connection ---
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("🚀 EcoTwin Intelligence Connected Successfully"))
-    .catch(err => console.error("❌ MongoDB Connection Error:", err));
+    .then(() => console.log("EcoTwin Intelligence Connected Successfully"))
+    .catch(err => console.error("MongoDB Connection Error:", err));
 
 // --- AI Recommendation Logic ---
 const generateRecommendations = (prediction, data) => {
@@ -59,7 +59,7 @@ const generateRecommendations = (prediction, data) => {
 
 // --- ROUTES ---
 
-// 1. Signup Route
+
 app.post("/signup", async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -77,7 +77,7 @@ app.post("/signup", async (req, res) => {
     }
 });
 
-// 2. Login Route
+
 app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -94,7 +94,7 @@ app.post("/login", async (req, res) => {
     }
 });
 
-// 3. Updated Prediction Route
+
 app.post("/predict", async (req, res) => {
     try {
         const data = req.body;
@@ -141,7 +141,7 @@ app.post("/predict", async (req, res) => {
 
             const prediction = parseFloat(resultData.trim());
             
-            // Generate a dynamic model confidence/accuracy score for this specific analysis
+            
             const dynamicAccuracy = Number((94 + (Math.random() * 3.8)).toFixed(1));
             
             const MIN = 500;
@@ -153,7 +153,7 @@ app.post("/predict", async (req, res) => {
 
             const recommendations = generateRecommendations(prediction, data);
 
-            // Create new record with dynamicAccuracy
+            
             const newPrediction = new UserPrediction({
                 userId,
                 bodyType: data.bodyType,
@@ -217,7 +217,7 @@ app.post("/predict", async (req, res) => {
     }
 });
 
-// 4. History Route
+
 app.get("/history/:userId", async (req, res) => {
     try {
         const predictions = await UserPrediction.find({ userId: req.params.userId }).sort({ createdAt: -1 });
@@ -228,4 +228,4 @@ app.get("/history/:userId", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 EcoTwin Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`EcoTwin Server running on http://localhost:${PORT}`));

@@ -13,7 +13,7 @@ import {
   LayoutDashboard
 } from "lucide-react";
 
-// LOCAL IMAGES - Kept exactly as provided
+
 import heroImg from "../assets/images/hero-india-solar.jpg";
 import metroImg from "../assets/images/india-metro.jpg";
 import evImg from "../assets/images/india-ev.jpg";
@@ -37,7 +37,7 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-[#fcfdfd] font-sans text-slate-900">
-      {/* NAVIGATION BAR - Responsive spacing */}
+      {/* NAVIGATION BAR */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex justify-between items-center">
           <div className="flex items-center gap-2 sm:gap-3">
@@ -72,7 +72,7 @@ function Home() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-20 space-y-20 sm:space-y-32">
         
-        {/* HERO SECTION - Responsive Grid (Stack on mobile, 2 cols on lg) */}
+        {/* HERO SECTION */}
         <section className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 text-emerald-700 text-[10px] sm:text-xs font-bold uppercase tracking-widest border border-emerald-100">
@@ -112,7 +112,7 @@ function Home() {
           </div>
         </section>
 
-        {/* STATS / WHY SECTION - Adjusted padding for mobile */}
+        {/* STATS */}
         <section className="bg-slate-900 rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 lg:p-20 text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-emerald-500/10 to-transparent"></div>
           <div className="relative z-10 max-w-3xl space-y-6 sm:space-y-8">
@@ -135,7 +135,7 @@ function Home() {
           </div>
         </section>
 
-        {/* FEATURES - Bento Grid (1 col mobile, 3 cols md+) */}
+        {/* FEATURES */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           <Feature
             icon={<BarChart3 size={32}/>}
@@ -154,7 +154,7 @@ function Home() {
           />
         </section>
 
-        {/* KNOWLEDGE BLOCKS - Responsive Grid */}
+        {/* KNOWLEDGE BLOCKS */}
         <section className="space-y-12">
           <div className="text-center space-y-4">
             <h3 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">Sustainable Solutions</h3>

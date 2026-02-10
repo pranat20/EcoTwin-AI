@@ -50,7 +50,7 @@ const History = () => {
     <div className="min-h-screen bg-[#F8FAFC] p-4 sm:p-6 md:p-8 lg:p-12 font-sans selection:bg-emerald-100">
       <div className="max-w-7xl mx-auto">
         
-        {/* TOP NAV & SEARCH - Responsive layout */}
+        {/* TOP NAV */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-8 sm:mb-12">
           <div className="space-y-3 sm:space-y-4 w-full">
             <button 
@@ -79,7 +79,7 @@ const History = () => {
           </div>
         </div>
 
-        {/* SUMMARY STATS GRID - 1 col on mobile, 3 on md */}
+        {/* SUMMARY */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
           <StatCard 
             icon={<Globe size={22}/>} 
@@ -101,7 +101,7 @@ const History = () => {
           />
         </div>
 
-        {/* DATA TABLE - Optimized for horizontal scrolling on small screens */}
+        {/* DATA TABLE */}
         <div className="bg-white rounded-[1.5rem] sm:rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse min-w-[600px] md:min-w-full">
@@ -164,7 +164,7 @@ const History = () => {
         </div>
       </div>
 
-      {/* --- ANALYSIS REPORT MODAL - Mobile height fixes --- */}
+      {/* --- ANALYSIS REPORT */}
       {selectedRecord && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-900/80 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-300">
           <div className="max-w-2xl w-full bg-white rounded-[2rem] sm:rounded-[3rem] shadow-2xl relative flex flex-col max-h-[90vh] overflow-hidden border border-white/20">

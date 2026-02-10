@@ -5,7 +5,7 @@ import Signup from "./pages/Signup"
 import Dashboard from "./pages/Dashboard"
 import Predict from "./pages/Predict"
 import History from "./pages/History"
-import Home from "./pages/Home"   // IMPORTANT: ADD THIS
+import Home from "./pages/Home"   
 
 function App() {
 

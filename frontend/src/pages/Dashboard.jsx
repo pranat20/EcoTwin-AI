@@ -57,7 +57,6 @@ const Dashboard = () => {
             latestEmission: latest.predictedCarbonEmission,
             avgScore: avg,
             improvement: trend,
-            // Logic: Use the saved dynamic accuracy, or the fallback if old data
             modelAccuracy: latest.modelAccuracy || 94.8 
           });
         }
@@ -208,7 +207,7 @@ const Dashboard = () => {
   );
 };
 
-// ... NavBtn, PremiumCard, and PremiumCardDark remain the same as your provided code ...
+
 function NavBtn({ icon, label, active, onClick, full }) {
     return (
       <button onClick={onClick} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${full ? 'w-full justify-start' : ''} ${active ? 'bg-white text-emerald-600 shadow-sm border border-slate-100' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'}`}>
