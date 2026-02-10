@@ -14,10 +14,15 @@ const AuthUser = require("./models/AuthUser");
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:5000", "https://eco-twin-ai-green.vercel.app/"], // Add your Vercel URL here
+    methods: ["GET", "POST"],
+    credentials: true
+}));
 app.use(express.json());
 
 const JWT_SECRET = process.env.JWT_SECRET || "ecotwin_secret_key";
+const PYTHON_CMD = process.platform === "win32" ? "python" : "python3";
 
 // --- MongoDB Connection ---
 mongoose.connect(process.env.MONGO_URI)
