@@ -38,7 +38,7 @@ def get_prediction():
                 try:
                     input_data[name] = float(val)
                 except:
-                    # Safety: if Node sends "never" for a number, force it to 0.0
+                    # Safety: if Node sends text for a number field, force it to 0.0
                     input_data[name] = 0.0
 
         # 4. Create DataFrame in the EXACT sequence used during training
@@ -48,6 +48,7 @@ def get_prediction():
         prediction = model.predict(input_df)
         
         # Standard output is read by Node.js resultData variable
+        # We use float() and round() to ensure it's a clean number for the backend
         print(round(float(prediction[0]), 2))
 
     except Exception as e:
@@ -57,5 +58,3 @@ def get_prediction():
 
 if __name__ == "__main__":
     get_prediction()
-
-    

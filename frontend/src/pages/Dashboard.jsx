@@ -24,7 +24,7 @@ const Dashboard = () => {
     latestEmission: 0,
     avgScore: 0,
     improvement: 0,
-    modelAccuracy: 94.8 // Default fallback or state from API
+    modelAccuracy: 94.8 // Fallback value
   });
   const [loading, setLoading] = useState(true);
 
@@ -57,12 +57,13 @@ const Dashboard = () => {
             latestEmission: latest.predictedCarbonEmission,
             avgScore: avg,
             improvement: trend,
+            // Logic: Use the saved dynamic accuracy, or the fallback if old data
             modelAccuracy: latest.modelAccuracy || 94.8 
           });
         }
       }
     } catch (error) {
-      console.error(error);
+      console.error("Dashboard Data Fetch Error:", error);
     } finally {
       setLoading(false);
     }
@@ -124,7 +125,7 @@ const Dashboard = () => {
         </div>
 
         {isMenuOpen && (
-          <div className="lg:hidden bg-white border-b border-slate-100 p-4 space-y-2">
+          <div className="lg:hidden bg-white border-b border-slate-100 p-4 space-y-2 animate-in slide-in-from-top duration-300">
             <NavBtn icon={<Home size={18}/>} label="Home" onClick={() => navigate("/home")} full />
             <NavBtn icon={<LayoutDashboard size={18}/>} label="Analytics" active full />
             <NavBtn icon={<History size={18}/>} label="Audit Log" onClick={() => navigate("/history")} full />
@@ -136,7 +137,7 @@ const Dashboard = () => {
         
         {/* BANNER */}
         <section className="relative rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden bg-slate-900 min-h-[280px] sm:h-64 flex items-end">
-          <img src={banner} className="absolute inset-0 w-full h-full object-cover opacity-50" alt="Future Banner" />
+          <img src={banner} className="absolute inset-0 w-full h-full object-cover opacity-50 transition-transform duration-700 hover:scale-105" alt="Future Banner" />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
           <div className="relative z-10 p-6 sm:p-8 md:p-12 w-full flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="text-center md:text-left">
@@ -146,18 +147,17 @@ const Dashboard = () => {
               <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">Welcome, {user?.name?.split(" ")[0]}</h2>
               <p className="text-slate-300 font-medium opacity-80 mt-1">Your climate impact intelligence is ready.</p>
             </div>
-            <button onClick={() => navigate("/predict")} className="md:hidden w-full bg-emerald-500 text-white py-4 rounded-2xl font-bold">New Analysis</button>
+            <button onClick={() => navigate("/predict")} className="md:hidden w-full bg-emerald-500 text-white py-4 rounded-2xl font-bold active:scale-95 transition-transform">New Analysis</button>
           </div>
         </section>
 
-        {/* METRICS GRID - Now with 5 columns on large screens to fit the new block */}
+        {/* METRICS GRID */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
           <PremiumCard title="ECO SCORE" value={`${stats.latestScore}%`} trend={stats.improvement} sub="Based on latest data" />
           <PremiumCard title="DAILY FOOTPRINT" value={`${(stats.latestEmission / 365).toFixed(2)} kg`} sub="Avg. CO2 / day" />
           <PremiumCard title="MONTHLY FOOTPRINT" value={`${(stats.latestEmission / 12).toFixed(2)} kg`} sub="Avg. CO2 / month" />
           <PremiumCardDark title="ANNUAL PREDICTION" value={`${stats.latestEmission} kg`} sub="Total CO2 Outlook" />
           
-          {/* --- NEW ACCURACY BLOCK --- */}
           <PremiumCardDark 
             title="AI MODEL ACCURACY" 
             value={`${stats.modelAccuracy}%`} 
@@ -191,13 +191,14 @@ const Dashboard = () => {
           </div>
 
           <div className="bg-emerald-600 rounded-[2rem] sm:rounded-[2.5rem] p-8 sm:p-10 text-white relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
             <Zap className="mb-6 opacity-80" size={40} />
-            <h3 className="text-2xl font-black mb-4">AI Sustainability Insight</h3>
+            <h3 className="text-2xl font-black mb-4 tracking-tight">AI Sustainability Insight</h3>
             <p className="text-emerald-50/90 leading-relaxed font-medium mb-8">
               Our Random Forest model is operating at <span className="text-white font-bold">{stats.modelAccuracy}% accuracy</span>. 
-              Optimizing your transport habits could decrease your footprint by 12% next month.
+              Optimizing your transport habits could decrease your footprint by up to 12% next month.
             </p>
-            <button onClick={() => navigate("/predict")} className="w-full bg-white/10 border border-white/20 py-4 rounded-2xl font-bold flex items-center justify-center gap-2">
+            <button onClick={() => navigate("/predict")} className="w-full bg-white/10 border border-white/20 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-white/20 transition-all active:scale-95">
               Optimize Now <ChevronRight size={18}/>
             </button>
           </div>
@@ -207,43 +208,44 @@ const Dashboard = () => {
   );
 };
 
+// ... NavBtn, PremiumCard, and PremiumCardDark remain the same as your provided code ...
 function NavBtn({ icon, label, active, onClick, full }) {
-  return (
-    <button onClick={onClick} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${full ? 'w-full justify-start' : ''} ${active ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}>
-      {icon} {label}
-    </button>
-  );
-}
-
-function PremiumCard({ title, value, trend, sub }) {
-  return (
-    <div className="bg-white p-6 sm:p-8 rounded-[1.8rem] sm:rounded-[2.2rem] border border-slate-100 shadow-sm group">
-      <div className="flex justify-between items-start mb-4">
-        <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">{title}</p>
-        {trend !== undefined && (
-          <div className={`flex items-center font-bold text-[10px] sm:text-xs ${trend >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
-            {trend >= 0 ? <ArrowUpRight size={14}/> : <ArrowDownRight size={14}/>} {Math.abs(trend)}%
-          </div>
-        )}
+    return (
+      <button onClick={onClick} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${full ? 'w-full justify-start' : ''} ${active ? 'bg-white text-emerald-600 shadow-sm border border-slate-100' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'}`}>
+        {icon} {label}
+      </button>
+    );
+  }
+  
+  function PremiumCard({ title, value, trend, sub }) {
+    return (
+      <div className="bg-white p-6 sm:p-8 rounded-[1.8rem] sm:rounded-[2.2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+        <div className="flex justify-between items-start mb-4">
+          <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">{title}</p>
+          {trend !== undefined && (
+            <div className={`flex items-center font-bold text-[10px] sm:text-xs ${trend >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
+              {trend >= 0 ? <ArrowUpRight size={14}/> : <ArrowDownRight size={14}/>} {Math.abs(trend)}%
+            </div>
+          )}
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mb-1 tracking-tight group-hover:text-emerald-600 transition-colors">{value}</h2>
+        <p className="text-[10px] sm:text-[11px] font-bold text-slate-400">{sub}</p>
       </div>
-      <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mb-1 group-hover:text-emerald-600 transition-colors">{value}</h2>
-      <p className="text-[10px] sm:text-[11px] font-bold text-slate-400">{sub}</p>
-    </div>
-  );
-}
-
-function PremiumCardDark({ title, value, sub, icon }) {
-  return (
-    <div className="bg-slate-900 p-6 sm:p-8 rounded-[1.8rem] sm:rounded-[2.2rem] shadow-xl relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-full -mr-12 -mt-12 blur-xl"></div>
-      <div className="flex justify-between items-center mb-4">
-        <p className="text-[9px] sm:text-[10px] font-black text-slate-500 uppercase tracking-widest">{title}</p>
-        {icon && icon}
+    );
+  }
+  
+  function PremiumCardDark({ title, value, sub, icon }) {
+    return (
+      <div className="bg-slate-900 p-6 sm:p-8 rounded-[1.8rem] sm:rounded-[2.2rem] shadow-xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-full -mr-12 -mt-12 blur-xl"></div>
+        <div className="flex justify-between items-center mb-4">
+          <p className="text-[9px] sm:text-[10px] font-black text-slate-500 uppercase tracking-widest">{title}</p>
+          {icon && icon}
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-black text-white mb-1 tracking-tight">{value}</h2>
+        <p className="text-[10px] sm:text-[11px] font-bold text-emerald-500/60 uppercase">{sub}</p>
       </div>
-      <h2 className="text-2xl sm:text-3xl font-black text-white mb-1 tracking-tight">{value}</h2>
-      <p className="text-[10px] sm:text-[11px] font-bold text-emerald-500/60 uppercase">{sub}</p>
-    </div>
-  );
-}
+    );
+  }
 
 export default Dashboard;

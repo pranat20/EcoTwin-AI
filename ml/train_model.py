@@ -1,8 +1,8 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split # Added for splitting
-from sklearn.metrics import r2_score, mean_absolute_error # Added for accuracy
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score, mean_absolute_error
 import joblib
 import os
 
@@ -19,12 +19,11 @@ print(f"Dataset loaded: {data.shape[0]} rows found.")
 
 # --- 2. Master Feature List ---
 all_features = [
-    'Body Type', 'Sex', 'Diet', 'How Often Shower', 'Heating Energy Source',
+    'Body Type', 'Sex', 'Diet', 'How Often Shower', 'How Long TV PC Daily Hour',
+    'Waste Bag Size', 'How Many New Clothes Monthly', 'How Long Internet Daily Hour',
+    'Energy efficiency', 'Recycling', 'Cooking_With', 'Heating Energy Source',
     'Transport', 'Vehicle Type', 'Social Activity', 'Monthly Grocery Bill',
-    'Frequency of Traveling by Air', 'Vehicle Monthly Distance Km', 
-    'Waste Bag Size', 'Waste Bag Weekly Count', 'How Long TV PC Daily Hour',
-    'How Many New Clothes Monthly', 'How Long Internet Daily Hour', 
-    'Energy efficiency', 'Recycling', 'Cooking_With'
+    'Frequency of Traveling by Air', 'Vehicle Monthly Distance Km', 'Waste Bag Weekly Count'
 ]
 target = 'CarbonEmission'
 
@@ -45,11 +44,7 @@ for col in all_features:
 y = data[target]
 
 # --- 4. X Split & Y Split ---
-# test_size=0.2 means 80% data for training, 20% for testing accuracy
 X_train, X_test, y_train, y_test = train_test_split(processed_X, y, test_size=0.2, random_state=42)
-
-print(f"Training on: {X_train.shape[0]} rows")
-print(f"Testing on: {X_test.shape[0]} rows")
 
 # --- 5. Training ---
 print("Training Random Forest Model...")
@@ -58,20 +53,24 @@ model.fit(X_train, y_train)
 
 # --- 6. Accuracy Evaluation ---
 predictions = model.predict(X_test)
-
-# R2 Score (1.0 is perfect accuracy)
 accuracy = r2_score(y_test, predictions) * 100
-# MAE (Average error in kg)
 mae = mean_absolute_error(y_test, predictions)
 
-print("-" * 30)
-print(f"MODEL ACCURACY (R2): {accuracy:.2f}%")
-print(f"AVERAGE ERROR (MAE): {mae:.2f} kg")
-print("-" * 30)
+print("\n" + "="*40)
+print(f"🚀 MODEL PERFORMANCE REPORT")
+print("="*40)
+print(f"✅ R2 ACCURACY SCORE: {accuracy:.2f}%")
+print(f"📊 MEAN ABSOLUTE ERROR: {mae:.2f} kg")
+print("="*40)
 
-# --- 7. Save Artifacts ---
+# --- 7. Feature Importance (The "Why" Behind the AI) ---
+print("\n🔥 TOP IMPACT FACTORS:")
+importances = pd.Series(model.feature_importances_, index=all_features)
+print(importances.sort_values(ascending=False).head(5))
+
+# --- 8. Save Artifacts ---
 joblib.dump(model, os.path.join(BASE_DIR, "carbon_model.pkl"))
 joblib.dump(label_encoders, os.path.join(BASE_DIR, "label_encoders.pkl"))
 joblib.dump(all_features, os.path.join(BASE_DIR, "feature_names.pkl"))
 
-print("Success! All artifacts saved.")
+print("\n✨ All artifacts saved successfully in the ml/ folder.")
