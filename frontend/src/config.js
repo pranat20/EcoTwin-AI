@@ -1,1 +1,4 @@
-export const API_URL = "https://ecotwin-backend.onrender.com";
+const CONFIG = {
+    BASE_URL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
+};
+export default CONFIG;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Leaf, Mail, Lock, ArrowRight, Loader2, Sparkles } from "lucide-react";
+import CONFIG from "../config"; 
 
 function Login() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/login", { email, password });
+      const res = await axios.post(`${CONFIG.BASE_URL}/login`, { email, password });
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));

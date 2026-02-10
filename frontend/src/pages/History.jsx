@@ -6,6 +6,7 @@ import {
   Calendar, Download, Filter
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import CONFIG from "../config";
 
 const History = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const History = () => {
 
   const fetchHistory = async (userId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/history/${userId}`);
+      const res = await axios.get(`${CONFIG.BASE_URL}/history/${userId}`);
       if (res.data.success) {
         setHistory(res.data.predictions);
       }

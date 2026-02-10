@@ -102,10 +102,13 @@ function Home() {
           </div>
           <div className="relative group">
             <div className="absolute -inset-4 bg-emerald-500/10 rounded-[2rem] blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
+            {/* Optimization: fetchpriority="high" and loading="eager" for the Hero image */}
             <img
               src={heroImg}
               alt="Sustainable Solar"
-              className="relative rounded-[2rem] shadow-2xl border border-white object-cover aspect-[4/3]"
+              fetchpriority="high"
+              loading="eager"
+              className="relative rounded-[2rem] shadow-2xl border border-white object-cover aspect-[4/3] will-change-transform"
             />
           </div>
         </section>
@@ -219,11 +222,13 @@ function Feature({ icon, title, desc }) {
 function ImageBlock({ img, title, desc, tag }) {
   return (
     <div className="group bg-white rounded-[2rem] border border-slate-100 overflow-hidden hover:shadow-2xl transition-all duration-500">
-      <div className="relative h-[300px] overflow-hidden">
+      <div className="relative h-[300px] overflow-hidden bg-slate-100">
+        {/* Optimization: loading="lazy" and will-change-transform for smooth scrolling */}
         <img 
           src={img} 
           alt={title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          loading="lazy"
+          className="w-full h-full object-cover transition-transform duration-700 will-change-transform group-hover:scale-110"
         />
         <div className="absolute top-6 left-6">
           <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest text-slate-800">

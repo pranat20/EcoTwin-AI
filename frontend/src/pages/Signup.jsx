@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Leaf, User, Mail, Lock, ArrowRight, Loader2, ShieldCheck } from "lucide-react";
+import CONFIG from "../config";
 
 function Signup() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Signup() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/signup", { name, email, password });
+      const res = await axios.post(`${CONFIG.BASE_URL}/signup`, { name, email, password });
       alert(res.data.message);
       if (res.data.success) navigate("/");
     } catch (err) {
