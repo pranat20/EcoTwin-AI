@@ -31,7 +31,7 @@ function Login() {
 
   return (
     <div className="min-h-screen flex bg-slate-50 font-sans selection:bg-emerald-100 selection:text-emerald-900">
-      {/* Visual Side - Premium Sustainable Tech Aesthetic */}
+      {/* Visual Side - Hidden on Mobile, Premium on Desktop */}
       <div className="hidden lg:flex w-5/12 bg-[#022c22] p-16 flex-col justify-between text-white relative overflow-hidden">
         {/* Background Patterns */}
         <div className="absolute inset-0 opacity-20" 
@@ -50,7 +50,8 @@ function Login() {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 text-xs font-bold uppercase tracking-[0.2em] mb-6">
             <Sparkles className="w-3.5 h-3.5" /> Intelligence Suite
           </div>
-          <h1 className="text-7xl font-extrabold leading-[1.1] mb-8 tracking-tighter">
+          {/* Responsive Heading: Smaller on mobile-sized containers, 7xl on desktop */}
+          <h1 className="text-5xl xl:text-7xl font-extrabold leading-[1.1] mb-8 tracking-tighter">
             Welcome <br/> 
             <span className="text-emerald-400 text-opacity-90">Back.</span>
           </h1>
@@ -64,23 +65,31 @@ function Login() {
         </div>
       </div>
 
-      {/* Form Side */}
-      <div className="w-full lg:w-7/12 flex items-center justify-center p-8 lg:p-24 bg-white">
+      {/* Form Side - Center aligned on all screens */}
+      <div className="w-full lg:w-7/12 flex items-center justify-center p-6 sm:p-12 lg:p-24 bg-white">
         <div className="w-full max-w-[420px]">
-          <div className="mb-12">
-            <h2 className="text-4xl font-extrabold text-slate-900 mb-3 tracking-tight">Sign In</h2>
-            <p className="text-slate-500 text-lg">Enter your credentials to access your dashboard.</p>
+          {/* Mobile Logo: Only visible when the left side is hidden */}
+          <div className="lg:hidden flex items-center gap-2 mb-10">
+            <div className="bg-emerald-600 p-2 rounded-xl">
+               <Leaf className="w-5 h-5 text-white" />
+            </div>
+            <span className="font-bold text-xl tracking-tight text-slate-900">EcoTwin</span>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
+          <div className="mb-8 lg:mb-12">
+            <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 mb-3 tracking-tight">Sign In</h2>
+            <p className="text-slate-500 text-base lg:text-lg">Enter your credentials to access your dashboard.</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-5 lg:space-y-6">
             <div className="space-y-2">
-              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
+              <label className="text-[10px] lg:text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
               <div className="group relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-emerald-500 transition-colors" />
                 <input
                   type="email"
                   required
-                  className="w-full py-4 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-medium text-slate-800 placeholder:text-slate-300"
+                  className="w-full py-3.5 lg:py-4 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-medium text-slate-800 placeholder:text-slate-300 text-sm lg:text-base"
                   placeholder="name@company.com"
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -89,15 +98,15 @@ function Login() {
 
             <div className="space-y-2">
               <div className="flex justify-between items-end mb-1">
-                <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Password</label>
-                <button type="button" className="text-[11px] font-bold text-emerald-600 hover:text-emerald-700 uppercase tracking-widest">Forgot Password?</button>
+                <label className="text-[10px] lg:text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">Password</label>
+                <button type="button" className="text-[10px] lg:text-[11px] font-bold text-emerald-600 hover:text-emerald-700 uppercase tracking-widest">Forgot?</button>
               </div>
               <div className="group relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-emerald-500 transition-colors" />
                 <input
                   type="password"
                   required
-                  className="w-full py-4 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-medium text-slate-800 placeholder:text-slate-300"
+                  className="w-full py-3.5 lg:py-4 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-medium text-slate-800 placeholder:text-slate-300 text-sm lg:text-base"
                   placeholder="••••••••"
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -106,7 +115,7 @@ function Login() {
 
             <button
               disabled={loading}
-              className="group w-full bg-slate-900 hover:bg-emerald-600 text-white py-4 rounded-2xl font-bold text-lg shadow-2xl shadow-slate-200 flex items-center justify-center gap-3 transition-all duration-300 transform hover:-translate-y-0.5"
+              className="group w-full bg-slate-900 hover:bg-emerald-600 text-white py-3.5 lg:py-4 rounded-2xl font-bold text-base lg:text-lg shadow-xl lg:shadow-2xl shadow-slate-200 flex items-center justify-center gap-3 transition-all duration-300 transform active:scale-95 lg:hover:-translate-y-0.5"
             >
               {loading ? (
                 <Loader2 className="animate-spin" />
@@ -119,8 +128,8 @@ function Login() {
             </button>
           </form>
 
-          <div className="mt-10 pt-10 border-t border-slate-100 flex flex-col items-center gap-4">
-            <p className="text-slate-500 font-medium">
+          <div className="mt-8 lg:mt-10 pt-8 lg:pt-10 border-t border-slate-100 flex flex-col items-center gap-4">
+            <p className="text-slate-500 font-medium text-sm lg:text-base">
               Don't have an account? <Link to="/signup" className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors underline-offset-4 hover:underline">Create Account</Link>
             </p>
           </div>

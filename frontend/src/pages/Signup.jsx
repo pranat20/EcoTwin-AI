@@ -27,7 +27,7 @@ function Signup() {
 
   return (
     <div className="min-h-screen flex bg-slate-50 font-sans selection:bg-emerald-100 selection:text-emerald-900">
-      {/* Visual Side - Premium Industrial Aesthetic */}
+      {/* Visual Side - Hidden on Mobile, Premium Industrial on Desktop */}
       <div className="hidden lg:flex w-5/12 bg-[#0f172a] p-16 flex-col justify-between text-white relative overflow-hidden">
         {/* Animated Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full">
@@ -36,7 +36,7 @@ function Signup() {
         </div>
         
         <div className="relative z-10 flex items-center gap-2.5 font-bold text-2xl tracking-tight">
-          <div className="bg-emerald-500 p-1.5 rounded-lg">
+          <div className="bg-emerald-500 p-1.5 rounded-lg shadow-lg shadow-emerald-500/20">
             <Leaf className="w-6 h-6 text-white" />
           </div>
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
@@ -48,7 +48,8 @@ function Signup() {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6">
             <ShieldCheck className="w-3.5 h-3.5" /> AI-Powered Sustainability
           </div>
-          <h1 className="text-7xl font-extrabold leading-[1.1] mb-8 tracking-tighter">
+          {/* Responsive Font Size */}
+          <h1 className="text-5xl xl:text-7xl font-extrabold leading-[1.1] mb-8 tracking-tighter">
             Design the <br/> 
             <span className="text-emerald-400">Green</span> Era.
           </h1>
@@ -60,7 +61,7 @@ function Signup() {
         <div className="relative z-10 flex items-center gap-6">
           <div className="flex -space-x-3">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="w-10 h-10 rounded-full border-2 border-[#0f172a] bg-slate-800 flex items-center justify-center text-[10px] font-bold">
+              <div key={i} className="w-10 h-10 rounded-full border-2 border-[#0f172a] bg-slate-800 flex items-center justify-center text-[10px] font-bold shadow-xl">
                 {String.fromCharCode(64 + i)}
               </div>
             ))}
@@ -71,24 +72,31 @@ function Signup() {
         </div>
       </div>
 
-      {/* Form Side - Clean Glassmorphism Effect */}
-      <div className="w-full lg:w-7/12 flex items-center justify-center p-8 lg:p-24 bg-white">
+      {/* Form Side - Optimized for Mobile Padding */}
+      <div className="w-full lg:w-7/12 flex items-center justify-center p-6 sm:p-12 lg:p-24 bg-white">
         <div className="w-full max-w-[440px]">
-          <div className="mb-12">
-            <h2 className="text-4xl font-extrabold text-slate-900 mb-3 tracking-tight">Create Account</h2>
-            {/*<p className="text-slate-500 text-lg">Start your 14-day premium trial today.</p>*/}
-            <p className="text-slate-500 text-lg">"Let’s build something great."</p>
+          {/* Mobile Logo Visibility */}
+          <div className="lg:hidden flex items-center gap-2 mb-10">
+            <div className="bg-emerald-600 p-2 rounded-xl shadow-lg shadow-emerald-200">
+              <Leaf className="w-5 h-5 text-white" />
+            </div>
+            <span className="font-bold text-xl tracking-tight text-slate-900">EcoTwin</span>
           </div>
 
-          <form onSubmit={handleSignup} className="space-y-6">
+          <div className="mb-8 lg:mb-12">
+            <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 mb-3 tracking-tight">Create Account</h2>
+            <p className="text-slate-500 text-base lg:text-lg italic font-medium">"Let’s build something great."</p>
+          </div>
+
+          <form onSubmit={handleSignup} className="space-y-5 lg:space-y-6">
             <div className="space-y-2">
-              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Full Name</label>
+              <label className="text-[10px] lg:text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Full Name</label>
               <div className="group relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
                 <input
                   required
                   autoComplete="name"
-                  className="w-full py-4 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-medium text-slate-800 placeholder:text-slate-300"
+                  className="w-full py-3.5 lg:py-4 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-medium text-slate-800 placeholder:text-slate-300 text-sm lg:text-base"
                   placeholder="Enter your name"
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -96,14 +104,14 @@ function Signup() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Work Email</label>
+              <label className="text-[10px] lg:text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Work Email</label>
               <div className="group relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
                 <input
                   type="email"
                   required
                   autoComplete="email"
-                  className="w-full py-4 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-medium text-slate-800 placeholder:text-slate-300"
+                  className="w-full py-3.5 lg:py-4 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-medium text-slate-800 placeholder:text-slate-300 text-sm lg:text-base"
                   placeholder="you@company.com"
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -111,14 +119,14 @@ function Signup() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
+              <label className="text-[10px] lg:text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
               <div className="group relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
                 <input
                   type="password"
                   required
                   autoComplete="new-password"
-                  className="w-full py-4 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-medium text-slate-800 placeholder:text-slate-300"
+                  className="w-full py-3.5 lg:py-4 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none font-medium text-slate-800 placeholder:text-slate-300 text-sm lg:text-base"
                   placeholder="Create a strong password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -127,7 +135,7 @@ function Signup() {
 
             <button
               disabled={loading}
-              className="group w-full bg-slate-900 hover:bg-emerald-600 text-white py-4 rounded-2xl font-bold text-lg shadow-2xl shadow-slate-200 flex items-center justify-center gap-3 transition-all duration-300 transform hover:-translate-y-0.5"
+              className="group w-full bg-slate-900 hover:bg-emerald-600 text-white py-3.5 lg:py-4 rounded-2xl font-bold text-base lg:text-lg shadow-xl lg:shadow-2xl shadow-slate-200 flex items-center justify-center gap-3 transition-all duration-300 transform active:scale-95 lg:hover:-translate-y-0.5"
             >
               {loading ? (
                 <Loader2 className="animate-spin" />
@@ -140,13 +148,13 @@ function Signup() {
             </button>
           </form>
 
-          <div className="mt-10 flex flex-col items-center gap-6">
-            <p className="text-slate-500 font-medium">
+          <div className="mt-8 lg:mt-10 flex flex-col items-center gap-6">
+            <p className="text-slate-500 font-medium text-sm lg:text-base">
               Already have an account? <Link to="/" className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors underline-offset-4 hover:underline">Sign in</Link>
             </p>
             
             <div className="h-[1px] w-full bg-slate-100 relative">
-              <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em]">
+              <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em] whitespace-nowrap">
                 Secure Registration
               </span>
             </div>
