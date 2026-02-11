@@ -6,8 +6,11 @@ EcoTwin AI is an AI-powered web application that predicts a user's carbon footpr
 ---
 
 ## Developed By
+
 **Pranat Pagar** 
+
 ---
+
 **Mannan Pathan**   
 
 ---
